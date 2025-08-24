@@ -4,6 +4,6 @@
     { "src": "api/prayer-times.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/api/prayer-times", "dest": "api/prayer-times.js" }
+    { "src": "/api/prayer-times", "dest": "/api/prayer-times.js" }
   ]
 }
