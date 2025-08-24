@@ -1,9 +1,9 @@
 {
   "version": 2,
   "builds": [
-    { "src": "api/prayer-times.js", "use": "@vercel/node" }
+    { "src": "prayer-times.js", "use": "@vercel/node" }
   ],
   "routes": [
-    { "src": "/api/prayer-times", "dest": "/api/prayer-times.js" }
+    { "src": "/prayer-times", "dest": "/api/prayer-times.js" }
   ]
 }
