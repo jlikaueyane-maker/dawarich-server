@@ -1,6 +1,5 @@
-// Endpoint principal pour Dawarich
+// API pour Dawarich : horaires de prière
 module.exports = async (req, res) => {
-  // Activer CORS
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept");
@@ -10,7 +9,7 @@ module.exports = async (req, res) => {
     return;
   }
 
-  // Récupérer les paramètres city et country
+  // Récupération des paramètres
   const url = new URL(req.url, `http://${req.headers.host}`);
   const city = url.searchParams.get("city") || "Paris";
   const country = url.searchParams.get("country") || "France";
