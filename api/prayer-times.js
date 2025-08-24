@@ -1,5 +1,6 @@
-// API pour Dawarich : horaires de prière
+// API Dawarich - Horaires de prière
 module.exports = async (req, res) => {
+  // Autoriser CORS
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept");
@@ -9,7 +10,7 @@ module.exports = async (req, res) => {
     return;
   }
 
-  // Récupération des paramètres
+  // Récupération des paramètres (ville + pays)
   const url = new URL(req.url, `http://${req.headers.host}`);
   const city = url.searchParams.get("city") || "Paris";
   const country = url.searchParams.get("country") || "France";
@@ -23,7 +24,7 @@ module.exports = async (req, res) => {
 
     const timings = data.data.timings;
 
-    // Filtrer uniquement ce que Dawarich utilise
+    // Extraire uniquement les horaires utiles
     const filtered = {
       Fajr: timings.Fajr,
       Dhuhr: timings.Dhuhr,
