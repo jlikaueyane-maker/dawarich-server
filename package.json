@@ -2,5 +2,5 @@
   "name": "dawarich-api",
   "version": "1.0.0",
   "main": "api/prayer-times.js",
-  "type": "module"
+  "license": "MIT"
 }
