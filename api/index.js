@@ -1,17 +1,44 @@
-// api/index.js
-module.exports = (req, res) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "X-Requested-With, Content-Type, Accept");
+import express from "express";
 
-  if (req.method === "OPTIONS") {
-    res.status(200).end();
-    return;
+// Création de l'app Express
+const app = express();
+
+// Fonction utilitaire pour récupérer les horaires
+async function getPrayerTimes(city = "Brussels", country = "Belgium") {
+  const response = await fetch(
+    `https://api.aladhan.com/v1/timingsByCity?city=${city}&country=${country}`
+  );
+
+  if (!response.ok) throw new Error(`API externe renvoie ${response.status}`);
+
+  const data = await response.json();
+  const timings = data.data.timings;
+
+  return {
+    Fajr: timings.Fajr,
+    Dhuhr: timings.Dhuhr,
+    Asr: timings.Asr,
+    Maghrib: timings.Maghrib,
+    Isha: timings.Isha,
+  };
+}
+
+// 👉 Racine et /prayer-times font la même chose
+app.get(["/", "/prayer-times"], async (req, res) => {
+  const { city = "Brussels", country = "Belgium" } = req.query;
+
+  try {
+    const timings = await getPrayerTimes(city, country);
+    res.json({ code: 200, status: "OK", data: { timings } });
+  } catch (error) {
+    console.error("Erreur API:", error.message);
+    res.status(500).json({
+      code: 500,
+      status: "Erreur",
+      message: "Erreur de récupération des horaires",
+    });
   }
+});
 
-  res.status(200).json({
-    message: "Bienvenue sur l'API Dawarich 🚀",
-    endpoints: ["/api/location (GET, POST)"],
-    status: "ok",
-  });
-};
+// 👉 Export spécial pour Vercel
+export default app;
