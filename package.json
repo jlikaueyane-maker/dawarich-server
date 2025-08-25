@@ -1,10 +1,8 @@
 {
-  "name": "dawarich-api",
+  "name": "dawarich-server",
   "version": "1.0.0",
-  "description": "API Dawarich pour les horaires de prière",
-  "main": "prayer-times.js",
-  "type": "module",
+  "main": "api/index.js",
   "scripts": {
-    "start": "node prayer-times.js"
+    "start": "node api/index.js"
   }
 }
